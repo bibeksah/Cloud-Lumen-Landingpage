@@ -8,6 +8,7 @@ import { Menu, X } from "lucide-react"
 import { useMediaQuery } from "@/hooks/use-media-query"
 import { ThemeToggle } from "@/components/ui/theme-toggle"
 import { Button } from "@/components/ui/button"
+import { usePathname } from "next/navigation"
 
 const navigation = [
   { name: "Home", href: "/" },
@@ -23,25 +24,8 @@ export default function ResponsiveHeader() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
   const [isHeaderHovered, setIsHeaderHovered] = useState(false)
   const headerRef = useRef<HTMLDivElement>(null)
-  const [pathname, setPathname] = useState("/")
+  const pathname = usePathname()
   const isDesktop = useMediaQuery("(min-width: 750px)")
-
-  useEffect(() => {
-    // Set the initial pathname
-    setPathname(window.location.pathname)
-
-    // Update pathname when it changes
-    const handleRouteChange = () => {
-      setPathname(window.location.pathname)
-    }
-
-    // Listen for popstate events (browser back/forward)
-    window.addEventListener("popstate", handleRouteChange)
-
-    return () => {
-      window.removeEventListener("popstate", handleRouteChange)
-    }
-  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -73,6 +57,13 @@ export default function ResponsiveHeader() {
 
   const handleHeaderMouseLeave = () => {
     setIsHeaderHovered(false)
+  }
+
+  const isActive = (href: string) => {
+    if (href === "/") {
+      return pathname === "/"
+    }
+    return pathname.startsWith(href)
   }
 
   return (
@@ -119,11 +110,17 @@ export default function ResponsiveHeader() {
               <Link
                 key={item.name}
                 href={item.href}
-                className={`text-sm font-semibold leading-6 transition-colors duration-200 ${
-                  pathname === item.href ? "text-[#9AD3F1]" : "text-[#133644] hover:text-[#9AD3F1]"
-                } ${pathname === item.href ? "dark:text-[#9AD3F1]" : "dark:text-white dark:hover:text-[#9AD3F1]"}`}
+                className={`text-sm font-semibold leading-6 transition-colors duration-200 relative ${
+                  isActive(item.href)
+                    ? "text-[#9AD3F1] dark:text-[#9AD3F1]"
+                    : "text-[#133644] dark:text-white hover:text-[#9AD3F1] dark:hover:text-[#9AD3F1]"
+                }`}
+                aria-current={isActive(item.href) ? "page" : undefined}
               >
                 {item.name}
+                {isActive(item.href) && (
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full bg-[#9AD3F1] rounded-full" />
+                )}
               </Link>
             ))}
           </nav>
@@ -193,12 +190,11 @@ export default function ResponsiveHeader() {
                     key={item.name}
                     href={item.href}
                     className={`-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 transition-colors duration-200 ${
-                      pathname === item.href ? "bg-gray-50 text-[#9AD3F1]" : "text-[#133644] hover:bg-gray-50"
-                    } ${
-                      pathname === item.href
-                        ? "dark:bg-gray-800 dark:text-[#9AD3F1]"
-                        : "dark:text-white dark:hover:bg-gray-800"
+                      isActive(item.href)
+                        ? "bg-gray-50 text-[#9AD3F1] dark:bg-gray-800 dark:text-[#9AD3F1]"
+                        : "text-[#133644] hover:bg-gray-50 dark:text-white dark:hover:bg-gray-800"
                     }`}
+                    aria-current={isActive(item.href) ? "page" : undefined}
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {item.name}

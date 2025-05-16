@@ -2,7 +2,7 @@
 
 import type React from "react"
 
-import { useState } from "react"
+import { useState, useRef } from "react"
 import Image from "next/image"
 import { ArrowRight, Upload, Check, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
@@ -50,6 +50,8 @@ export default function CareersClientPage() {
   const [fileError, setFileError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+
+  const formSectionRef = useRef<HTMLDivElement>(null)
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
@@ -109,6 +111,10 @@ export default function CareersClientPage() {
     }, 1500)
   }
 
+  const scrollToForm = () => {
+    formSectionRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
   return (
     <main className="min-h-screen">
       {/* Hero Section */}
@@ -122,7 +128,7 @@ export default function CareersClientPage() {
                 businesses with innovative cloud solutions.
               </p>
               <div className="mt-8">
-                <Button className="bg-[#9AD3F1] text-[#133644] hover:bg-[#9AD3F1]/90">
+                <Button className="bg-[#9AD3F1] text-[#133644] hover:bg-[#9AD3F1]/90" onClick={scrollToForm}>
                   Submit Your CV <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
               </div>
@@ -221,7 +227,7 @@ export default function CareersClientPage() {
       </section>
 
       {/* Career Opportunities Section */}
-      <section id="opportunities" className="py-16 sm:py-24">
+      <section id="opportunities" className="py-16 sm:py-24" ref={formSectionRef}>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl font-bold text-[#133644] dark:text-[#9AD3F1] sm:text-3xl">Career Opportunities</h2>
