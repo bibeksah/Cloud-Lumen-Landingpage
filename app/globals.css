@@ -1,0 +1,143 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 196 53% 17%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 199 79% 77%;
+    --secondary-foreground: 196 53% 17%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 196 53% 17%;
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 199 79% 77%;
+    --primary-foreground: 196 53% 17%;
+    --secondary: 196 53% 17%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 199 79% 77%;
+  }
+}
+
+/* Base styles for headings, paragraphs, and icons */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: #133644;
+  transition: color 0.2s ease;
+}
+
+.dark h1,
+.dark h2,
+.dark h3,
+.dark h4,
+.dark h5,
+.dark h6 {
+  color: #9ad3f1;
+}
+
+p {
+  color: black;
+  transition: color 0.2s ease;
+}
+
+.dark p {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+svg:not([class*="text-"]) {
+  color: #133644;
+  transition: color 0.2s ease;
+}
+
+.dark svg:not([class*="text-"]) {
+  color: #9ad3f1;
+}
+
+/* Component styles */
+.btn-primary {
+  background-color: #133644;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: rgba(19, 54, 68, 0.9);
+}
+
+.dark .btn-primary {
+  background-color: #9ad3f1;
+  color: #133644;
+}
+
+.dark .btn-primary:hover {
+  background-color: rgba(154, 211, 241, 0.9);
+}
+
+.btn-secondary {
+  background-color: #9ad3f1;
+  color: #133644;
+}
+
+.btn-secondary:hover {
+  background-color: rgba(154, 211, 241, 0.9);
+}
+
+.dark .btn-secondary {
+  background-color: #133644;
+  color: #9ad3f1;
+}
+
+.dark .btn-secondary:hover {
+  background-color: rgba(19, 54, 68, 0.9);
+}
+
+.btn-outline {
+  border: 1px solid #133644;
+  color: #133644;
+}
+
+.btn-outline:hover {
+  background-color: rgba(19, 54, 68, 0.1);
+}
+
+.dark .btn-outline {
+  border: 1px solid #9ad3f1;
+  color: #9ad3f1;
+}
+
+.dark .btn-outline:hover {
+  background-color: rgba(154, 211, 241, 0.2);
+}
