@@ -1,7 +1,7 @@
 "use client"
 
 import Link from "next/link"
-import { Cloud, Server, Shield, Database } from "lucide-react"
+import { Cloud, Server, Shield, Code } from "lucide-react"
 import { StaggeredGrid } from "@/components/ui/staggered-grid"
 import EnhancedServiceCard from "@/components/enhanced-service-card"
 
@@ -25,10 +25,10 @@ const servicePreview = [
     description: "Comprehensive protection against evolving cyber threats, safeguarding your data.",
   },
   {
-    id: "disaster-recovery",
-    title: "Disaster Recovery",
-    icon: Database,
-    description: "Comprehensive backup and recovery solutions that ensure business continuity.",
+    id: "tech-service",
+    title: "Tech Service",
+    icon: Code,
+    description: "Custom web, mobile, AI, cybersecurity, and design solutions for your digital needs.",
   },
 ]
 

@@ -1,4 +1,4 @@
-import { Cloud, Server, Shield, Database, Settings, FileText } from "lucide-react"
+import { Cloud, Server, Shield, Database, Settings, FileText, Code } from "lucide-react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
 const services = [
@@ -52,6 +52,11 @@ const services = [
       "Collaboration and Communication Software",
       "Legal & Document Management",
     ],
+  },
+  {
+    title: "Tech Service",
+    icon: Code,
+    items: ["Web Development", "Mobile Development", "AI Integration", "Cybersecurity", "Graphic Designing"],
   },
 ]
 

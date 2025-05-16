@@ -1,4 +1,4 @@
-import { Cloud, Server, Database, Shield, Settings, FileText } from "lucide-react"
+import { Cloud, Server, Database, Shield, Settings, FileText, Code } from "lucide-react"
 
 export interface SubService {
   id: string
@@ -233,6 +233,45 @@ export const servicesData: Service[] = [
         title: "Legal and Document Management",
         description:
           "Our SaaS platform offers law firms and legal departments a centralized, cloud-based solution to efficiently handle, organize, and access legal documents and case files. By leveraging cloud technology, legal professionals can streamline document workflows, enhance team collaboration, and ensure compliance with legal standards.",
+      },
+    ],
+  },
+  {
+    id: "tech-service",
+    title: "Tech Service",
+    icon: Code,
+    description:
+      "Comprehensive technology services designed to help businesses build, maintain, and secure their digital presence and infrastructure.",
+    subServices: [
+      {
+        id: "web-development",
+        title: "Web Development",
+        description:
+          "Our web development services deliver custom, responsive, and high-performance websites and web applications tailored to your business needs. From simple informational sites to complex e-commerce platforms and enterprise web applications, our expert developers use cutting-edge technologies to create solutions that drive engagement and conversions.",
+      },
+      {
+        id: "mobile-development",
+        title: "Mobile Development",
+        description:
+          "We create native and cross-platform mobile applications that provide seamless user experiences across iOS and Android devices. Our mobile development team focuses on building intuitive, feature-rich apps that align with your business objectives while ensuring optimal performance, security, and scalability.",
+      },
+      {
+        id: "ai-integration",
+        title: "AI Integration",
+        description:
+          "Harness the power of artificial intelligence to transform your business operations. Our AI integration services help you implement machine learning, natural language processing, computer vision, and predictive analytics solutions that automate processes, generate insights, and create new opportunities for innovation and growth.",
+      },
+      {
+        id: "cybersecurity",
+        title: "Cybersecurity",
+        description:
+          "Protect your digital assets with our comprehensive cybersecurity services. We offer security assessments, penetration testing, security architecture design, and incident response planning to identify vulnerabilities, mitigate risks, and ensure your systems and data remain secure against evolving cyber threats.",
+      },
+      {
+        id: "graphic-designing",
+        title: "Graphic Designing",
+        description:
+          "Our graphic design services help you establish a strong visual identity across all digital and print media. From logo design and brand guidelines to marketing materials and UI/UX design, our creative team delivers visually compelling assets that communicate your brand message effectively and create memorable impressions.",
       },
     ],
   },
