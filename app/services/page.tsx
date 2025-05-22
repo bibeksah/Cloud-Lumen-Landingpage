@@ -4,6 +4,8 @@ import { ArrowRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import ServiceNavigation from "@/components/services/service-navigation"
 import ServiceList from "@/components/services/service-list"
+import { servicesData } from "@/lib/services-data"
+import { EnhancedSubService } from "@/components/services/enhanced-sub-service"
 
 export const metadata: Metadata = {
   title: "Services - Cloud Lumen",
@@ -18,6 +20,13 @@ export default function ServicesPage({
   searchParams?: { view?: string }
 }) {
   const showAllServices = searchParams?.view === "all"
+
+  // Get a few featured sub-services to showcase
+  const featuredSubServices = [
+    servicesData[0].subServices[0], // First sub-service from first service
+    servicesData[1].subServices[0], // First sub-service from second service
+    servicesData[2].subServices[0], // First sub-service from third service
+  ]
 
   return (
     <main className="min-h-screen">
@@ -70,6 +79,24 @@ export default function ServicesPage({
                 </p>
               </div>
               <ServiceNavigation />
+
+              {/* Featured Sub-Services Preview */}
+              <div className="mt-16 mb-12">
+                <div className="mx-auto max-w-3xl text-center mb-8">
+                  <h2 className="text-2xl font-bold text-[#133644] dark:text-[#9AD3F1] sm:text-3xl">
+                    Featured Solutions
+                  </h2>
+                  <p className="mt-4 text-lg text-gray-600 dark:text-gray-300">
+                    Preview some of our most popular solutions
+                  </p>
+                </div>
+                <div className="space-y-6">
+                  {featuredSubServices.map((subService, index) => (
+                    <EnhancedSubService key={subService.id} subService={subService} index={index} />
+                  ))}
+                </div>
+              </div>
+
               <div className="mt-12 flex justify-center">
                 <Link href="/services?view=all">
                   <Button className="bg-[#133644] hover:bg-[#133644]/90">

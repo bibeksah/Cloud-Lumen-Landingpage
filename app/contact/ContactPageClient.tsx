@@ -1,14 +1,17 @@
 "use client"
 
-import { useState } from "react"
+import type React from "react"
+
+import { useState, useEffect } from "react"
 import Image from "next/image"
-import { Mail, Phone, MapPin, Clock, Send } from "lucide-react"
+import { Mail, Phone, MapPin, Clock, Send, AlertCircle } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Card, CardContent } from "@/components/ui/card"
+import { servicesData } from "@/lib/services-data"
 
 const offices = [
   {
@@ -37,38 +40,123 @@ const offices = [
   },
 ]
 
+// Validation functions
+const validateEmail = (email: string) => {
+  const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+  return re.test(email)
+}
+
+const validatePhone = (phone: string) => {
+  // Allow empty phone (it's optional) or validate if provided
+  if (!phone) return true
+  // Simple validation for demonstration - accepts various formats
+  const re = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/
+  return re.test(phone.replace(/\s/g, ""))
+}
+
 export default function ContactPageClient() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     company: "",
     phone: "",
-    subject: "",
+    service: "",
+    subService: "",
     message: "",
   })
 
-  const handleChange = (e) => {
+  const [availableSubServices, setAvailableSubServices] = useState<Array<{ id: string; title: string }>>([])
+  const [errors, setErrors] = useState<Record<string, string>>({})
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitSuccess, setSubmitSuccess] = useState(false)
+
+  // Update available sub-services when service changes
+  useEffect(() => {
+    if (formData.service) {
+      const selectedService = servicesData.find((service) => service.id === formData.service)
+      if (selectedService) {
+        setAvailableSubServices(selectedService.subServices)
+      } else {
+        setAvailableSubServices([])
+      }
+      // Reset sub-service when service changes
+      setFormData((prev) => ({ ...prev, subService: "" }))
+    } else {
+      setAvailableSubServices([])
+    }
+  }, [formData.service])
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target
     setFormData((prev) => ({ ...prev, [name]: value }))
+
+    // Clear error when field is edited
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
-  const handleSelectChange = (value) => {
-    setFormData((prev) => ({ ...prev, subject: value }))
+  const handleSelectChange = (name: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }))
+
+    // Clear error when field is edited
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev }
+        delete newErrors[name]
+        return newErrors
+      })
+    }
   }
 
-  const handleSubmit = (e) => {
+  const validateForm = () => {
+    const newErrors: Record<string, string> = {}
+
+    // Required fields
+    if (!formData.name.trim()) newErrors.name = "Name is required"
+    if (!formData.email.trim()) newErrors.email = "Email is required"
+    else if (!validateEmail(formData.email)) newErrors.email = "Please enter a valid email address"
+    if (!formData.company.trim()) newErrors.company = "Company name is required"
+    if (formData.phone && !validatePhone(formData.phone)) newErrors.phone = "Please enter a valid phone number"
+    if (!formData.message.trim()) newErrors.message = "Message is required"
+
+    setErrors(newErrors)
+    return Object.keys(newErrors).length === 0
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    // In a real implementation, this would send the data to a server
-    console.log("Form submitted:", formData)
-    alert("Thank you for your message! We'll be in touch soon.")
-    setFormData({
-      name: "",
-      email: "",
-      company: "",
-      phone: "",
-      subject: "",
-      message: "",
-    })
+
+    if (validateForm()) {
+      setIsSubmitting(true)
+
+      // Simulate API call
+      setTimeout(() => {
+        console.log("Form submitted:", formData)
+        setIsSubmitting(false)
+        setSubmitSuccess(true)
+
+        // Reset form after successful submission
+        setFormData({
+          name: "",
+          email: "",
+          company: "",
+          phone: "",
+          service: "",
+          subService: "",
+          message: "",
+        })
+
+        // Reset success message after 5 seconds
+        setTimeout(() => {
+          setSubmitSuccess(false)
+        }, 5000)
+      }, 1500)
+    }
   }
 
   return (
@@ -94,21 +182,53 @@ export default function ContactPageClient() {
               <p className="mt-4 text-lg text-gray-600">
                 Fill out the form below and one of our cloud solution experts will get back to you within 24 hours.
               </p>
+
+              {submitSuccess && (
+                <div className="mt-6 rounded-md bg-green-50 p-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <svg className="h-5 w-5 text-green-400" viewBox="0 0 20 20" fill="currentColor">
+                        <path
+                          fillRule="evenodd"
+                          d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                          clipRule="evenodd"
+                        />
+                      </svg>
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-green-800">
+                        Thank you for your message! We'll be in touch soon.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="mt-8 space-y-6">
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="name">Full Name</Label>
+                    <Label htmlFor="name" className="flex items-center">
+                      Full Name <span className="ml-1 text-red-500">*</span>
+                    </Label>
                     <Input
                       id="name"
                       name="name"
                       placeholder="Your name"
                       value={formData.name}
                       onChange={handleChange}
-                      required
+                      className={errors.name ? "border-red-500" : ""}
                     />
+                    {errors.name && (
+                      <p className="text-sm text-red-500 flex items-center">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.name}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="email">Email</Label>
+                    <Label htmlFor="email" className="flex items-center">
+                      Email <span className="ml-1 text-red-500">*</span>
+                    </Label>
                     <Input
                       id="email"
                       name="email"
@@ -116,21 +236,35 @@ export default function ContactPageClient() {
                       placeholder="your.email@company.com"
                       value={formData.email}
                       onChange={handleChange}
-                      required
+                      className={errors.email ? "border-red-500" : ""}
                     />
+                    {errors.email && (
+                      <p className="text-sm text-red-500 flex items-center">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.email}
+                      </p>
+                    )}
                   </div>
                 </div>
                 <div className="grid gap-6 sm:grid-cols-2">
                   <div className="space-y-2">
-                    <Label htmlFor="company">Company</Label>
+                    <Label htmlFor="company" className="flex items-center">
+                      Company <span className="ml-1 text-red-500">*</span>
+                    </Label>
                     <Input
                       id="company"
                       name="company"
                       placeholder="Your company"
                       value={formData.company}
                       onChange={handleChange}
-                      required
+                      className={errors.company ? "border-red-500" : ""}
                     />
+                    {errors.company && (
+                      <p className="text-sm text-red-500 flex items-center">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.company}
+                      </p>
+                    )}
                   </div>
                   <div className="space-y-2">
                     <Label htmlFor="phone">Phone Number</Label>
@@ -140,26 +274,63 @@ export default function ContactPageClient() {
                       placeholder="(123) 456-7890"
                       value={formData.phone}
                       onChange={handleChange}
+                      className={errors.phone ? "border-red-500" : ""}
                     />
+                    {errors.phone && (
+                      <p className="text-sm text-red-500 flex items-center">
+                        <AlertCircle className="h-4 w-4 mr-1" />
+                        {errors.phone}
+                      </p>
+                    )}
                   </div>
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="subject">Subject</Label>
-                  <Select onValueChange={handleSelectChange} value={formData.subject}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a subject" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="general-inquiry">General Inquiry</SelectItem>
-                      <SelectItem value="sales">Sales</SelectItem>
-                      <SelectItem value="support">Technical Support</SelectItem>
-                      <SelectItem value="partnership">Partnership Opportunity</SelectItem>
-                      <SelectItem value="careers">Careers</SelectItem>
-                    </SelectContent>
-                  </Select>
+
+                {/* Service Selection */}
+                <div className="grid gap-6 sm:grid-cols-2">
+                  <div className="space-y-2">
+                    <Label htmlFor="service">Service (Optional)</Label>
+                    <Select value={formData.service} onValueChange={(value) => handleSelectChange("service", value)}>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">None</SelectItem>
+                        {servicesData.map((service) => (
+                          <SelectItem key={service.id} value={service.id}>
+                            {service.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Sub-Service Selection - Only enabled if a service is selected */}
+                  <div className="space-y-2">
+                    <Label htmlFor="subService">Sub-Service (Optional)</Label>
+                    <Select
+                      value={formData.subService}
+                      onValueChange={(value) => handleSelectChange("subService", value)}
+                      disabled={!formData.service || availableSubServices.length === 0}
+                    >
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a sub-service" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="none">None</SelectItem>
+                        {availableSubServices.map((subService) => (
+                          <SelectItem key={subService.id} value={subService.id}>
+                            {subService.title}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                  </div>
                 </div>
+
                 <div className="space-y-2">
-                  <Label htmlFor="message">Message</Label>
+                  <Label htmlFor="message" className="flex items-center">
+                    Message <span className="ml-1 text-red-500">*</span>
+                  </Label>
                   <Textarea
                     id="message"
                     name="message"
@@ -167,11 +338,45 @@ export default function ContactPageClient() {
                     rows={5}
                     value={formData.message}
                     onChange={handleChange}
-                    required
+                    className={errors.message ? "border-red-500" : ""}
                   />
+                  {errors.message && (
+                    <p className="text-sm text-red-500 flex items-center">
+                      <AlertCircle className="h-4 w-4 mr-1" />
+                      {errors.message}
+                    </p>
+                  )}
                 </div>
-                <Button type="submit" className="w-full bg-[#133644] hover:bg-[#133644]/90">
-                  <Send className="mr-2 h-4 w-4" /> Send Message
+                <Button type="submit" className="w-full bg-[#133644] hover:bg-[#133644]/90" disabled={isSubmitting}>
+                  {isSubmitting ? (
+                    <>
+                      <svg
+                        className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                        xmlns="http://www.w3.org/2000/svg"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                      >
+                        <circle
+                          className="opacity-25"
+                          cx="12"
+                          cy="12"
+                          r="10"
+                          stroke="currentColor"
+                          strokeWidth="4"
+                        ></circle>
+                        <path
+                          className="opacity-75"
+                          fill="currentColor"
+                          d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                        ></path>
+                      </svg>
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="mr-2 h-4 w-4" /> Send Message
+                    </>
+                  )}
                 </Button>
               </form>
             </div>
@@ -248,7 +453,7 @@ export default function ContactPageClient() {
               <Card key={office.city} className="overflow-hidden border-none shadow-lg">
                 <div className="relative h-48 w-full">
                   <Image
-                    src={office.image || "/placeholder.svg"}
+                    src={office.image || "/placeholder.svg?height=192&width=384&query=office"}
                     alt={`${office.city} Office`}
                     fill
                     className="object-cover"

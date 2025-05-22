@@ -50,6 +50,7 @@ export default function CareersClientPage() {
   const [fileError, setFileError] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
+  const [errors, setErrors] = useState<Record<string, string>>({})
 
   const formSectionRef = useRef<HTMLDivElement>(null)
 
@@ -87,8 +88,41 @@ export default function CareersClientPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
 
+    // Reset errors
+    setErrors({})
+
+    // Validate all fields
+    const newErrors: Record<string, string> = {}
+
+    if (!formData.name.trim()) {
+      newErrors.name = "Full name is required"
+    }
+
+    if (!formData.email.trim()) {
+      newErrors.email = "Email address is required"
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      newErrors.email = "Please enter a valid email address"
+    }
+
+    if (!formData.phone.trim()) {
+      newErrors.phone = "Phone number is required"
+    }
+
+    if (!formData.position.trim()) {
+      newErrors.position = "Position of interest is required"
+    }
+
+    if (!formData.message.trim()) {
+      newErrors.message = "Cover letter/additional information is required"
+    }
+
     if (!file) {
-      setFileError("Please upload your CV")
+      newErrors.cv = "Please upload your CV"
+    }
+
+    // If there are errors, display them and stop submission
+    if (Object.keys(newErrors).length > 0) {
+      setErrors(newErrors)
       return
     }
 
@@ -280,10 +314,13 @@ export default function CareersClientPage() {
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-6">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <span className="text-red-500">*</span> All fields are required
+                    </p>
                     <div className="grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
                         <Label htmlFor="name" className="text-gray-700 dark:text-gray-300">
-                          Full Name
+                          Full Name <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           id="name"
@@ -291,13 +328,13 @@ export default function CareersClientPage() {
                           value={formData.name}
                           onChange={handleInputChange}
                           placeholder="Your full name"
-                          required
-                          className="dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                          className={`dark:border-gray-600 dark:bg-gray-700 dark:text-white ${errors.name ? "border-red-500" : ""}`}
                         />
+                        {errors.name && <p className="mt-1 text-sm text-red-500">{errors.name}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="email" className="text-gray-700 dark:text-gray-300">
-                          Email
+                          Email <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           id="email"
@@ -306,15 +343,15 @@ export default function CareersClientPage() {
                           value={formData.email}
                           onChange={handleInputChange}
                           placeholder="your.email@example.com"
-                          required
-                          className="dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                          className={`dark:border-gray-600 dark:bg-gray-700 dark:text-white ${errors.email ? "border-red-500" : ""}`}
                         />
+                        {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
                       </div>
                     </div>
                     <div className="grid gap-6 md:grid-cols-2">
                       <div className="space-y-2">
                         <Label htmlFor="phone" className="text-gray-700 dark:text-gray-300">
-                          Phone Number
+                          Phone Number <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           id="phone"
@@ -322,12 +359,13 @@ export default function CareersClientPage() {
                           value={formData.phone}
                           onChange={handleInputChange}
                           placeholder="Your phone number"
-                          className="dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                          className={`dark:border-gray-600 dark:bg-gray-700 dark:text-white ${errors.phone ? "border-red-500" : ""}`}
                         />
+                        {errors.phone && <p className="mt-1 text-sm text-red-500">{errors.phone}</p>}
                       </div>
                       <div className="space-y-2">
                         <Label htmlFor="position" className="text-gray-700 dark:text-gray-300">
-                          Position of Interest
+                          Position of Interest <span className="text-red-500">*</span>
                         </Label>
                         <Input
                           id="position"
@@ -335,13 +373,14 @@ export default function CareersClientPage() {
                           value={formData.position}
                           onChange={handleInputChange}
                           placeholder="What role are you interested in?"
-                          className="dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                          className={`dark:border-gray-600 dark:bg-gray-700 dark:text-white ${errors.position ? "border-red-500" : ""}`}
                         />
+                        {errors.position && <p className="mt-1 text-sm text-red-500">{errors.position}</p>}
                       </div>
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="message" className="text-gray-700 dark:text-gray-300">
-                        Cover Letter / Additional Information
+                        Cover Letter / Additional Information <span className="text-red-500">*</span>
                       </Label>
                       <Textarea
                         id="message"
@@ -350,19 +389,26 @@ export default function CareersClientPage() {
                         onChange={handleInputChange}
                         placeholder="Tell us a bit about yourself and why you're interested in working with us"
                         rows={5}
-                        className="dark:border-gray-600 dark:bg-gray-700 dark:text-white"
+                        className={`dark:border-gray-600 dark:bg-gray-700 dark:text-white ${errors.message ? "border-red-500" : ""}`}
                       />
+                      {errors.message && <p className="mt-1 text-sm text-red-500">{errors.message}</p>}
                     </div>
                     <div className="space-y-2">
                       <Label htmlFor="cv" className="text-gray-700 dark:text-gray-300">
-                        Upload CV (PDF, max 5MB)
+                        Upload CV (PDF, max 5MB) <span className="text-red-500">*</span>
                       </Label>
                       <div className="mt-1 flex items-center">
                         <label
                           htmlFor="cv"
-                          className="group flex w-full cursor-pointer flex-col items-center rounded-md border-2 border-dashed border-gray-300 px-6 py-8 text-center hover:border-[#9AD3F1] dark:border-gray-600 dark:hover:border-[#9AD3F1]"
+                          className={`group flex w-full cursor-pointer flex-col items-center rounded-md border-2 border-dashed ${
+                            errors.cv
+                              ? "border-red-500"
+                              : "border-gray-300 hover:border-[#9AD3F1] dark:border-gray-600 dark:hover:border-[#9AD3F1]"
+                          } px-6 py-8 text-center`}
                         >
-                          <Upload className="h-10 w-10 text-gray-400 group-hover:text-[#9AD3F1]" />
+                          <Upload
+                            className={`h-10 w-10 ${errors.cv ? "text-red-500" : "text-gray-400 group-hover:text-[#9AD3F1]"}`}
+                          />
                           <span className="mt-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
                             {file ? file.name : "Click to upload your CV"}
                           </span>
@@ -374,10 +420,10 @@ export default function CareersClientPage() {
                             accept=".pdf"
                             onChange={handleFileChange}
                             className="sr-only"
-                            required
                           />
                         </label>
                       </div>
+                      {errors.cv && <p className="mt-1 text-sm text-red-500">{errors.cv}</p>}
                       {fileError && <p className="mt-1 text-sm text-red-600 dark:text-red-400">{fileError}</p>}
                       {file && (
                         <p className="mt-1 flex items-center text-sm text-green-600 dark:text-green-400">

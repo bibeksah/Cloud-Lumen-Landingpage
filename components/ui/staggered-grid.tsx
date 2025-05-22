@@ -71,9 +71,9 @@ export const StaggeredGrid = ({
       }[columns] || "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
 
   const gapSize = {
-    small: "gap-4",
-    medium: "gap-6",
-    large: "gap-8",
+    small: "gap-6",
+    medium: "gap-8",
+    large: "gap-12",
   }[gap]
 
   // Add enhanced item class when in single column mode
@@ -97,14 +97,7 @@ export const StaggeredGrid = ({
       )}
       initial="hidden"
       animate={controls}
-      variants={{
-        hidden: {},
-        visible: {
-          transition: {
-            staggerChildren: 0.1,
-          },
-        },
-      }}
+      variants={containerVariants}
     >
       {React.Children.map(children, (child, index) => (
         <motion.div key={index} className={enhancedItemClassName} variants={itemVariants}>

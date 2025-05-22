@@ -13,7 +13,6 @@ import EnhancedServicePreview from "@/components/enhanced-service-preview"
 import EnhancedWhyChooseUs from "@/components/enhanced-why-choose-us"
 import EnhancedTestimonialPreview from "@/components/enhanced-testimonial-preview"
 import EnhancedCTA from "@/components/enhanced-cta"
-import { Card } from "@/components/ui/card"
 
 export default function Home() {
   // Load Framer Motion animations
@@ -56,19 +55,12 @@ export default function Home() {
           <div className="mt-16">
             <EnhancedServicePreview />
             <div className="mt-8">
-              <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-                <Link href="/services" className="group">
-                  <Card className="h-full overflow-hidden border-2 border-gray-100 transition-all hover:border-[#9AD3F1]/50 hover:shadow-md dark:border-gray-700 dark:bg-gray-800">
-                    <div className="p-6">
-                      <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-[#9AD3F1]/10 transition-all duration-300 group-hover:bg-[#9AD3F1]/20 group-hover:shadow-lg group-hover:shadow-[#9AD3F1]/20">
-                        <ArrowRight className="h-6 w-6 text-[#9AD3F1] transition-transform duration-300 group-hover:scale-110" />
-                      </div>
-                      <h3 className="mb-2 text-xl font-bold text-[#133644] dark:text-[#9AD3F1]">View All Services</h3>
-                      <p className="text-gray-600 dark:text-gray-300">
-                        Explore our complete range of cloud solutions and services
-                      </p>
-                    </div>
-                  </Card>
+              <div className="mt-12 text-center">
+                <Link href="/services">
+                  <Button size="lg" className="group bg-[#133644] hover:bg-[#1c4d5e] text-white">
+                    <span>View All Services</span>
+                    <ArrowRight className="ml-2 h-5 w-5 transition-transform duration-300 group-hover:translate-x-1" />
+                  </Button>
                 </Link>
               </div>
             </div>

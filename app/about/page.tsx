@@ -8,7 +8,7 @@ export const metadata = {
   keywords: "cloud company, IT solutions provider, enterprise technology, cloud experts, IT professionals",
 }
 
-const teamMembers = [
+/*const teamMembers = [
   {
     name: "Sarah Johnson",
     role: "Chief Executive Officer",
@@ -33,7 +33,7 @@ const teamMembers = [
     image: "/images/team/priya-patel.png",
     bio: "Priya ensures our clients receive exceptional support and achieve their desired outcomes with our solutions.",
   },
-]
+]*/
 
 const values = [
   {
@@ -142,7 +142,7 @@ export default function AboutPage() {
       </section>
 
       {/* Our Team */}
-      <section className="bg-[#133644]/5 py-16 sm:py-24">
+      {/*<section className="bg-[#133644]/5 py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="mx-auto max-w-3xl text-center">
             <h2 className="text-2xl font-bold text-[#133644] sm:text-3xl">Our Leadership Team</h2>
@@ -163,7 +163,7 @@ export default function AboutPage() {
             ))}
           </div>
         </div>
-      </section>
+      </section>*/}
 
       {/* Partners */}
       <section className="py-16 sm:py-24">

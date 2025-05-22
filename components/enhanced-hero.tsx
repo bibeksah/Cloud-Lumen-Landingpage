@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import Image from "next/image"
 import { MagneticButton } from "@/components/ui/magnetic-button"
 import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
 export default function EnhancedHero() {
   return (
@@ -57,12 +58,14 @@ export default function EnhancedHero() {
             className="mt-8 flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0"
           >
             <MagneticButton strength={40}>
-              <Button
-                size="lg"
-                className="bg-[#9AD3F1] text-[#0A2029] hover:bg-[#9AD3F1]/90 dark:bg-[#7BBFE6] dark:text-[#0A2029]"
-              >
-                Get a Custom Quote
-              </Button>
+              <Link href="/contact">
+                <Button
+                  size="lg"
+                  className="bg-[#9AD3F1] text-[#0A2029] hover:bg-[#9AD3F1]/90 dark:bg-[#7BBFE6] dark:text-[#0A2029]"
+                >
+                  Get a Custom Quote
+                </Button>
+              </Link>
             </MagneticButton>
             <MagneticButton strength={40}>
               <Button
