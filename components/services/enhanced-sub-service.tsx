@@ -94,12 +94,49 @@ export function EnhancedSubService({ subService, index }: EnhancedSubServiceProp
           className="overflow-hidden"
         >
           <div className="border-t border-gray-100 p-6 dark:border-gray-700">
-            <p className="text-gray-700 dark:text-gray-300">{subService.description}</p>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {/* Left side - Text and Key Features */}
+              <div className="space-y-4">
+                <p className="text-gray-700 dark:text-gray-300">{subService.description}</p>
+
+                {/* Key Features Section */}
+                <div>
+                  <h4 className="text-lg font-semibold text-[#133644] dark:text-[#9AD3F1] mb-3">Key Features</h4>
+                  <ul className="space-y-2">
+                    <li className="flex items-start gap-2">
+                      <div className="w-2 h-2 bg-[#9AD3F1] rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-600 dark:text-gray-400">Advanced cloud infrastructure management</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-2 h-2 bg-[#9AD3F1] rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-600 dark:text-gray-400">24/7 monitoring and support</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-2 h-2 bg-[#9AD3F1] rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-600 dark:text-gray-400">Scalable solutions for enterprise needs</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <div className="w-2 h-2 bg-[#9AD3F1] rounded-full mt-2 flex-shrink-0"></div>
+                      <span className="text-gray-600 dark:text-gray-400">Industry-leading security protocols</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+              {/* Right side - Image Placeholder */}
+              <div className="flex items-center justify-center">
+                <div className="w-full h-48 bg-gradient-to-br from-[#9AD3F1]/20 to-[#133644]/10 rounded-lg border-2 border-dashed border-[#9AD3F1]/30 flex items-center justify-center">
+                  <div className="text-center">
+                    <div className="w-16 h-16 bg-[#9AD3F1]/20 rounded-full flex items-center justify-center mx-auto mb-2">
+                      <Icon className="w-8 h-8 text-[#133644] dark:text-[#9AD3F1]" />
+                    </div>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Service Image</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div className="mt-6 flex flex-wrap gap-4">
-              <Button size="sm" className="bg-[#133644] hover:bg-[#133644]/90 dark:bg-[#9AD3F1] dark:text-[#133644]">
-                Learn More
-              </Button>
               <Button
                 size="sm"
                 variant="outline"
