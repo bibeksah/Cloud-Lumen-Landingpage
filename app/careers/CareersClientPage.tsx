@@ -51,6 +51,7 @@ export default function CareersClientPage() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
   const [errors, setErrors] = useState<Record<string, string>>({})
+  const [submitApiError, setSubmitApiError] = useState<string | null>(null)
 
   const formSectionRef = useRef<HTMLDivElement>(null)
 
@@ -85,64 +86,91 @@ export default function CareersClientPage() {
     setFile(selectedFile)
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    // Reset errors
     setErrors({})
+    setSubmitApiError(null) // Reset previous API errors
+    setIsSubmitted(false) // Reset previous submission status
 
-    // Validate all fields
+    // ... (keep existing validation logic for newErrors)
     const newErrors: Record<string, string> = {}
 
     if (!formData.name.trim()) {
       newErrors.name = "Full name is required"
     }
-
     if (!formData.email.trim()) {
       newErrors.email = "Email address is required"
     } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
       newErrors.email = "Please enter a valid email address"
     }
-
     if (!formData.phone.trim()) {
       newErrors.phone = "Phone number is required"
     }
-
     if (!formData.position.trim()) {
       newErrors.position = "Position of interest is required"
     }
-
     if (!formData.message.trim()) {
       newErrors.message = "Cover letter/additional information is required"
     }
-
     if (!file) {
       newErrors.cv = "Please upload your CV"
+    } else if (file.type !== "application/pdf") {
+      newErrors.cv = "Please upload a PDF file" // Redundant if fileError is handled, but good for direct submit
+      setFileError("Please upload a PDF file")
+    } else if (file.size > 5 * 1024 * 1024) {
+      newErrors.cv = "File size must be less than 5MB" // Redundant
+      setFileError("File size must be less than 5MB")
     }
 
-    // If there are errors, display them and stop submission
-    if (Object.keys(newErrors).length > 0) {
+    if (Object.keys(newErrors).length > 0 || fileError) {
       setErrors(newErrors)
+      // If fileError exists but not in newErrors.cv, add it for display consistency
+      if (fileError && !newErrors.cv) {
+        setErrors((prev) => ({ ...prev, cv: fileError }))
+      }
       return
     }
 
     setIsSubmitting(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSubmitted(true)
+    const submissionFormData = new FormData()
+    submissionFormData.append("name", formData.name)
+    submissionFormData.append("email", formData.email)
+    submissionFormData.append("phone", formData.phone)
+    submissionFormData.append("position", formData.position)
+    submissionFormData.append("message", formData.message)
+    if (file) {
+      submissionFormData.append("resume", file)
+    }
 
-      // Reset form
-      setFormData({
-        name: "",
-        email: "",
-        phone: "",
-        position: "",
-        message: "",
+    try {
+      const response = await fetch("/api/careers", {
+        method: "POST",
+        body: submissionFormData, // FormData handles Content-Type
       })
-      setFile(null)
-    }, 1500)
+
+      const result = await response.json()
+
+      if (response.ok) {
+        setIsSubmitted(true)
+        setFormData({
+          name: "",
+          email: "",
+          phone: "",
+          position: "",
+          message: "",
+        })
+        setFile(null)
+        setFileError(null)
+      } else {
+        setSubmitApiError(result.error || "An unexpected error occurred. Please try again.")
+      }
+    } catch (error) {
+      console.error("Submission error:", error)
+      setSubmitApiError("Failed to submit application. Please check your internet connection and try again.")
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const scrollToForm = () => {
@@ -431,6 +459,18 @@ export default function CareersClientPage() {
                         </p>
                       )}
                     </div>
+                    {submitApiError && (
+                      <div className="my-4 rounded-md bg-red-50 p-3">
+                        <div className="flex">
+                          <div className="flex-shrink-0">
+                            <AlertCircle className="h-5 w-5 text-red-400" />
+                          </div>
+                          <div className="ml-3">
+                            <p className="text-sm font-medium text-red-800">{submitApiError}</p>
+                          </div>
+                        </div>
+                      </div>
+                    )}
                     <div className="flex justify-end">
                       <Button
                         type="submit"

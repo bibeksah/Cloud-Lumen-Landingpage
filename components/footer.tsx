@@ -158,7 +158,7 @@ export default function Footer() {
             <ul className="mt-4 space-y-2">
               <li className="flex items-start">
                 <Mail className="mr-2 h-5 w-5 flex-shrink-0 text-[#9AD3F1]" />
-                <span className="text-sm text-white dark:text-white">info@cloudlumen.com</span>
+                <span className="text-sm text-white dark:text-white">info@cloudlumen.in</span>
               </li>
               <li className="flex items-start">
                 <Phone className="mr-2 h-5 w-5 flex-shrink-0 text-[#9AD3F1]" />

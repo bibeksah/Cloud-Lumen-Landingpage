@@ -69,6 +69,7 @@ export default function ContactPageClient() {
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitSuccess, setSubmitSuccess] = useState(false)
+  const [submitError, setSubmitError] = useState<string | null>(null)
 
   // Update available sub-services when service changes
   useEffect(() => {
@@ -128,34 +129,49 @@ export default function ContactPageClient() {
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    setSubmitError(null) // Reset previous errors
+    setSubmitSuccess(false) // Reset previous success
 
     if (validateForm()) {
       setIsSubmitting(true)
 
-      // Simulate API call
-      setTimeout(() => {
-        console.log("Form submitted:", formData)
-        setIsSubmitting(false)
-        setSubmitSuccess(true)
-
-        // Reset form after successful submission
-        setFormData({
-          name: "",
-          email: "",
-          company: "",
-          phone: "",
-          service: "",
-          subService: "",
-          message: "",
+      try {
+        const response = await fetch("/api/contact", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(formData),
         })
 
-        // Reset success message after 5 seconds
-        setTimeout(() => {
-          setSubmitSuccess(false)
-        }, 5000)
-      }, 1500)
+        const result = await response.json()
+
+        if (response.ok) {
+          setSubmitSuccess(true)
+          setFormData({
+            name: "",
+            email: "",
+            company: "",
+            phone: "",
+            service: "",
+            subService: "",
+            message: "",
+          })
+          // Reset success message after 5 seconds
+          setTimeout(() => {
+            setSubmitSuccess(false)
+          }, 5000)
+        } else {
+          setSubmitError(result.error || "An unexpected error occurred. Please try again.")
+        }
+      } catch (error) {
+        console.error("Submission error:", error)
+        setSubmitError("Failed to send message. Please check your internet connection and try again.")
+      } finally {
+        setIsSubmitting(false)
+      }
     }
   }
 
@@ -199,6 +215,18 @@ export default function ContactPageClient() {
                       <p className="text-sm font-medium text-green-800">
                         Thank you for your message! We'll be in touch soon.
                       </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+              {submitError && (
+                <div className="mt-6 rounded-md bg-red-50 p-4">
+                  <div className="flex">
+                    <div className="flex-shrink-0">
+                      <AlertCircle className="h-5 w-5 text-red-400" />
+                    </div>
+                    <div className="ml-3">
+                      <p className="text-sm font-medium text-red-800">{submitError}</p>
                     </div>
                   </div>
                 </div>
