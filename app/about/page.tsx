@@ -201,8 +201,8 @@ export default function AboutPage() {
             <Image src="/images/partners/Zerto.webp" alt="Zerto" width={150} height={60} className="h-12 w-auto" />
             <Image src="/images/partners/veeam.webp" alt="Veeam" width={150} height={60} className="h-12 w-auto" />
             <Image src="/images/partners/CrowdStrike_logo.webp" alt="Crowdstrike" width={150} height={60} className="h-12 w-auto" />
-            <Image src="/images/partners/Microsoft_Azure-logo.webp" alt="Azure" width={150} height={60} className="h-12 w-auto" />
-            <Image src="/images/partners/HubSpot_logo.webp" alt="HubSpot" width={150} height={60} className="h-12 w-auto" />
+            <Image src="/images/partners/Microsoft_Azure-Logo.webp" alt="Azure" width={150} height={60} className="h-12 w-auto" />
+            <Image src="/images/partners/HubSpot_Logo.webp" alt="HubSpot" width={150} height={60} className="h-12 w-auto" />
             <Image src="/images/partners/zoho-logo-512.webp" alt="Zoho" width={150} height={60} className="h-12 w-auto" />          </div>
         </div>
       </section>

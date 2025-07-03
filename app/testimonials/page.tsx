@@ -15,14 +15,14 @@ const testimonials = [
     author: "Akash Wakode",
     position: "IT Head",
     company: "Uplift Systems",
-    logo: "/images/clients/ARmature.webp",
+    logo: "/images/clients/Uplift.webp",
   },
   {
     quote: "Migrating to the cloud felt overwhelming, but Cloud Lumen made it effortless. Their team helped us plan, execute, and optimize the transition. Our applications now run faster, and our costs are better controlled. Excellent support and true technical expertise!",
     author: "Akshay Bhatia",
     position: "Managing Director",
     company: "Armature Constructions",
-    logo: "/images/clients/Uplift.webp",
+    logo: "/images/clients/ARmature.webp",
   },
     {
     quote: "Partnering with Cloud Lumen was a game-changer for our cloud transformation. Their team quickly understood our requirements and delivered a secure, scalable cloud architecture that has significantly improved our performance and uptime. Their support has been prompt and proactive every step of the way.",
