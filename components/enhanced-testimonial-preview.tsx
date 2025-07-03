@@ -10,14 +10,14 @@ import { Card, CardContent } from "@/components/ui/card"
 
 const testimonials = [
   {
-    quote: "They helped us consolidate licensing, migrate to Azure, and reduce costs by 30% in 6 months.",
-    author: "CIO, Logistics Company",
-    logo: "/images/clients/global-logistics.png",
+    quote: "Migrating to the cloud felt overwhelming, but Cloud Lumen made it effortless. Their team helped us plan, execute, and optimize the transition. Our applications now run faster, and our costs are better controlled. Excellent support and true technical expertise!",
+    author: "Managing Director, Armature Constructions",
+    logo: "/images/clients/ARmature.webp",
   },
   {
-    quote: "Cloud Lumen's security solutions have significantly improved our threat detection capabilities.",
-    author: "CISO, Healthcare Provider",
-    logo: "/images/clients/medtech-healthcare.png",
+    quote: "Cloud Lumen provided us with a robust and scalable cloud environment tailored to our business. The performance, uptime, and security have exceeded expectations. It's like having an extended IT team that’s always available.",
+    author: "IT Head, Uplift Systems",
+    logo: "/images/clients/Uplift.webp",
   },
 ]
 
@@ -97,7 +97,7 @@ export default function EnhancedTestimonialPreview() {
                         alt="Company logo"
                         width={120}
                         height={60}
-                        className="h-full w-full object-contain dark:brightness-200 dark:contrast-200 dark:invert"
+                        className="h-full w-full object-contain rounded-lg"
                       />
                     </div>
                   </div>

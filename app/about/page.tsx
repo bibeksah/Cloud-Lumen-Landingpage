@@ -76,7 +76,7 @@ export default function AboutPage() {
           <div className="grid gap-12 lg:grid-cols-2">
             <div className="flex items-center justify-center">
               <div className="relative h-[300px] w-full max-w-md overflow-hidden rounded-xl sm:h-[400px]">
-                <Image src="/images/about-company.png" alt="Cloud Lumen Team" fill className="object-cover" />
+                <Image src="/images/full-logo.svg" alt="Cloud Lumen Team" fill className="object-contain p-4" />
               </div>
             </div>
             <div className="flex flex-col justify-center">

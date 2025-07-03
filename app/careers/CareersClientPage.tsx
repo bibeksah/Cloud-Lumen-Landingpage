@@ -197,7 +197,7 @@ export default function CareersClientPage() {
             </div>
             <div className="flex items-center justify-center">
               <div className="relative h-[300px] w-full max-w-lg overflow-hidden rounded-xl sm:h-[400px]">
-                <Image src="/images/careers-team.png" alt="Cloud Lumen Team" fill className="object-cover" />
+                <Image src="/team.jpg" alt="Cloud Lumen Team" fill className="object-cover" />
               </div>
             </div>
           </div>
@@ -215,13 +215,6 @@ export default function CareersClientPage() {
           </div>
           <div className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
             <div className="relative overflow-hidden rounded-xl">
-              <Image
-                src="/images/culture-collaboration.png"
-                alt="Team Collaboration"
-                width={400}
-                height={300}
-                className="h-auto w-full"
-              />
               <div className="mt-4">
                 <h3 className="text-xl font-bold text-[#133644] dark:text-[#9AD3F1]">Collaboration</h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-300">
@@ -230,13 +223,6 @@ export default function CareersClientPage() {
               </div>
             </div>
             <div className="relative overflow-hidden rounded-xl">
-              <Image
-                src="/images/culture-innovation.png"
-                alt="Innovation"
-                width={400}
-                height={300}
-                className="h-auto w-full"
-              />
               <div className="mt-4">
                 <h3 className="text-xl font-bold text-[#133644] dark:text-[#9AD3F1]">Innovation</h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-300">
@@ -245,13 +231,6 @@ export default function CareersClientPage() {
               </div>
             </div>
             <div className="relative overflow-hidden rounded-xl">
-              <Image
-                src="/images/culture-diversity.png"
-                alt="Diversity and Inclusion"
-                width={400}
-                height={300}
-                className="h-auto w-full"
-              />
               <div className="mt-4">
                 <h3 className="text-xl font-bold text-[#133644] dark:text-[#9AD3F1]">Diversity & Inclusion</h3>
                 <p className="mt-2 text-gray-600 dark:text-gray-300">

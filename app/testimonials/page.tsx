@@ -137,7 +137,7 @@ export default function TestimonialsPage() {
             <Card className="overflow-hidden border-none shadow-lg">
               <div className="relative h-48 w-full">
                 <Image
-                  src="/images/case-studies/healthcare-migration.png"
+                  src="/images/case-studies/retail-optimization.png"
                   alt="Healthcare Cloud Migration"
                   fill
                   className="object-cover"
@@ -171,7 +171,7 @@ export default function TestimonialsPage() {
             <Card className="overflow-hidden border-none shadow-lg">
               <div className="relative h-48 w-full">
                 <Image
-                  src="/images/case-studies/retail-optimization.png"
+                  src="/images/case-studies/healthcare-migration.png"
                   alt="Retail Cloud Optimization"
                   fill
                   className="object-cover"

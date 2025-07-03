@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#133644] text-white transition-colors duration-200 dark:bg-gray-900/95">
       <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           <div>
             <Link href="/" className="inline-block">
               <Image
@@ -106,7 +106,7 @@ export default function Footer() {
               </li>
             </ul>
           </div>
-          <div>
+          {/*<div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white dark:text-[#9AD3F1]">Legal</h3>
             <ul className="mt-4 space-y-2">
               <li>
@@ -150,7 +150,7 @@ export default function Footer() {
                 </Link>
               </li>
             </ul>
-          </div>
+          </div>*/}
           <div>
             <h3 className="text-sm font-semibold uppercase tracking-wider text-white dark:text-[#9AD3F1]">
               Contact Us
