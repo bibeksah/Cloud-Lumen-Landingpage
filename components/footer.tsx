@@ -163,7 +163,7 @@ export default function Footer() {
                    <br />
                   sales@cloudlumen.in
                    <br />
-                  cloudlumen9@gmail.in
+                  cloudlumen9@gmail.com
                 </span>
               </li>
               <li className="flex items-start">
