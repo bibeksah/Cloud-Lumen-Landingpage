@@ -70,14 +70,14 @@ export const servicesData: Service[] = [
       {
         id: "colocation",
         title: "Colocation",
-        image:"/service.webp" ,
+        image:"/Service.webp" ,
         description:
           "Colocation services provide secure, reliable data center space for hosting your servers and IT infrastructure with guaranteed power, cooling, and connectivity. Benefit from enhanced uptime, physical security, and scalability without the cost of maintaining your own facility.",
       },
       {
         id: "dedicated-hosting",
         title: "Dedicated Hosting",
-        image:"/serverrig.webp" ,
+        image:"/Serverrig.webp" ,
         description:
           "Dedicated hosting services offer exclusive use of physical servers, ensuring maximum performance, security, and customization for your business needs. Ideal for high-traffic websites and mission-critical applications requiring full control and reliability.",
       },
@@ -187,7 +187,7 @@ export const servicesData: Service[] = [
       {
         id: "database-management",
         title: "Database Management",
-        image:"/server.webp" ,
+        image:"/Server.webp" ,
         description:
           "We offer database management services, including installation, configuration, and maintenance of various database management systems. This service ensures high availability, performance, and security of your databases.",
       },
@@ -208,7 +208,7 @@ export const servicesData: Service[] = [
       {
         id: "managed-backup",
         title: "Managed Backup",
-        image:"/backup.webp" ,
+        image:"/Backup.webp" ,
         description:
           "Our managed backup service, provides reliable and secure data protection solutions. We handle the maintenance of backup solutions. This ensures that your critical data is always protected and recoverable in case of any disaster.",
       },
