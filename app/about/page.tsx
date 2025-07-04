@@ -82,7 +82,7 @@ export default function AboutPage() {
             <div className="flex flex-col justify-center">
               <h2 className="text-2xl font-bold text-[#133644] sm:text-3xl">Our Story</h2>
               <p className="mt-6 text-lg text-gray-600">
-                Founded in 2015, Cloud Lumen emerged from a vision to bridge the gap between complex cloud technologies
+                Founded in 2024, Cloud Lumen emerged from a vision to bridge the gap between complex cloud technologies
                 and businesses seeking to leverage them. Our founders recognized that many organizations struggled to
                 navigate the rapidly evolving cloud landscape and needed a trusted partner to guide them.
               </p>
