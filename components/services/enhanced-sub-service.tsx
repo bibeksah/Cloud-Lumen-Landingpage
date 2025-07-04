@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import type { SubService } from "@/lib/services-data"
 import { Button } from "@/components/ui/button"
 import { servicesData } from "@/lib/services-data"
+import Link from "next/link"
 
 // Get all icons from the services data to use for sub-services
 const getIconForSubService = (subServiceId: string) => {
@@ -47,13 +48,13 @@ export function EnhancedSubService({ subService, index }: EnhancedSubServiceProp
         )}
       >
         {/* Gradient background effect */}
-        <div
+        {/*<div
           className={cn(
             "absolute inset-0 bg-gradient-to-r from-[#9AD3F1]/5 via-transparent to-[#9AD3F1]/5 opacity-0 transition-opacity duration-500",
             "group-hover:opacity-100",
             isExpanded && "opacity-100",
           )}
-        />
+        />*/}
 
         {/* Header section */}
         <div
@@ -133,13 +134,15 @@ export function EnhancedSubService({ subService, index }: EnhancedSubServiceProp
             </div>
 
             <div className="mt-6 flex flex-wrap gap-4">
-              <Button
-                size="sm"
-                variant="outline"
-                className="border-[#133644] text-[#133644] hover:bg-[#133644]/10 dark:border-[#9AD3F1] dark:text-[#9AD3F1]"
-              >
-                Request Quote
-              </Button>
+              <Link href="/contact">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  className="border-[#133644] text-[#133644] hover:bg-[#133644]/10 dark:border-[#9AD3F1] dark:text-[#9AD3F1]"
+                >
+                  Request Quote
+                </Button>
+              </Link>
             </div>
           </div>
         </motion.div>
